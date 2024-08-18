@@ -1,0 +1,11 @@
+The top accident hotspots in New York State based on the dataset:
+
+Latitude 40.70, Longitude -73.99: 158 accidents
+Latitude 42.69, Longitude -73.84: 138 accidents
+Latitude 42.87, Longitude -78.78: 134 accidents
+Latitude 42.66, Longitude -73.73: 120 accidents
+Latitude 41.06, Longitude -73.86: 111 accidents
+Latitude 42.84, Longitude -78.79: 104 accidents
+Latitude 42.75, Longitude -73.76: 104 accidents
+Latitude 41.05, Longitude -73.81: 103 accidents
+Latitude 40.71, Longitude -73.82: 99 accidents
