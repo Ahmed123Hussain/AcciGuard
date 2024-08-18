@@ -56,7 +56,7 @@ To facilitate testing, the application includes a feature that simulates the use
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/yourusername/AcciGuard.git
+   git clone https://github.com/Ahmed123Hussain/AcciGuard.git
    cd AcciGuard
    ```
 
@@ -80,7 +80,7 @@ To facilitate testing, the application includes a feature that simulates the use
 
 ## Contributing
 
-Contributions are welcome! Please submit pull requests or report issues on the [GitHub repository](https://github.com/yourusername/AcciGuard).
+Contributions are welcome! Please submit pull requests or report issues on the [GitHub repository](https://github.com/Ahmed123Hussain/AcciGuard).
 
 ## License
 
