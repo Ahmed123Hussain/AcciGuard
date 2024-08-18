@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Map with Search Box</title>
+    <title>Map with Hotspots, User Location, and Alerts</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
         * {
@@ -45,30 +45,6 @@
             border-radius: 4px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .nine h1 {
-  text-align:center; font-size:50px; text-transform:uppercase; color:#222; letter-spacing:1px;
-  font-family:"Playfair Display", serif; font-weight:400;
-}
-.nine h1 span {
-  margin-top: 5px;
-    font-size:15px; color:#444; word-spacing:1px; font-weight:normal; letter-spacing:2px;
-    text-transform: uppercase; font-family:"Raleway", sans-serif; font-weight:500;
-
-    display: grid;
-    grid-template-columns: 1fr max-content 1fr;
-    grid-template-rows: 27px 0;
-    grid-gap: 20px;
-    align-items: center;
-}
-
-.nine h1 span:after,.nine h1 span:before {
-    content: " ";
-    display: block;
-    border-bottom: 1px solid #ccc;
-    border-top: 1px solid #ccc;
-    height: 5px;
-  background-color:#f8f8f8;
-}
 
         #results {
             position: absolute;
@@ -94,29 +70,74 @@
             background-color: #f0f0f0;
         }
 
+        #locate-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            z-index: 1000;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #locate-btn:hover {
+            background-color: #0056b3;
+        }
+        .nine h1 {
+  text-align:center; font-size:50px; text-transform:uppercase; color:#222; letter-spacing:1px;
+  font-family:"Playfair Display", serif; font-weight:400;
+}
+.nine h1 span {
+  margin-top: 5px;
+    font-size:15px; color:#444; word-spacing:1px; font-weight:normal; letter-spacing:2px;
+    text-transform: uppercase; font-family:"Raleway", sans-serif; font-weight:500;
+
+    display: grid;
+    grid-template-columns: 1fr max-content 1fr;
+    grid-template-rows: 27px 0;
+    grid-gap: 20px;
+    align-items: center;
+}
+
+.nine h1 span:after,.nine h1 span:before {
+    content: " ";
+    display: block;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    height: 5px;
+  background-color:#f8f8f8;
+}
     </style>
 </head>
 <body>
     <div class="nine">
         <h1>AcciGuard<span>Your Safe Eye</span></h1>
       </div>
-
     <div id="map">
         <!-- Search box container -->
         <div id="search-box">
             <input type="text" id="search-input" placeholder="Search for a place...">
             <div id="results"></div>
         </div>
+
+        <!-- Locate Me button -->
+        <button id="locate-btn">Locate Me</button>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
-        var map = L.map('map').setView([51.505, -0.09], 13);
+        // Initialize the map and set its view to the first accident hotspot
+        var map = L.map('map').setView([40.70, -73.99], 13);
 
+        // Add the OpenStreetMap tiles
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
-        
+
         // Accident hotspots coordinates
         var hotspots = [
             [40.70, -73.99],
@@ -140,7 +161,6 @@
             }).addTo(map);
         });
 
-        
         var marker;
 
         // Function to search location using Nominatim API
@@ -177,6 +197,59 @@
             } else {
                 document.getElementById('results').style.display = 'none';
             }
+        });
+
+        // Function to play a beep sound
+        function playBeep() {
+            var audio = new Audio('https://www.soundjay.com/button/beep-07.wav'); // Example beep sound
+            audio.play();
+        }
+
+        // Function to calculate the distance between two coordinates in meters
+        function getDistance(lat1, lon1, lat2, lon2) {
+            var R = 6371e3; // Earth's radius in meters
+            var φ1 = lat1 * Math.PI/180; // φ, λ in radians
+            var φ2 = lat2 * Math.PI/180;
+            var Δφ = (lat2 - lat1) * Math.PI/180;
+            var Δλ = (lon2 - lon1) * Math.PI/180;
+
+            var a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+                    Math.cos(φ1) * Math.cos(φ2) *
+                    Math.sin(Δλ/2) * Math.sin(Δλ/2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+            var distance = R * c; // in meters
+            return distance;
+        }
+
+        // Locate Me functionality
+        document.getElementById('locate-btn').addEventListener('click', function() {
+            map.locate({ setView: true, maxZoom: 16 });
+
+            map.on('locationfound', function(e) {
+                var radius = e.accuracy / 2;
+
+                if (marker) {
+                    map.removeLayer(marker);
+                }
+                marker = L.marker(e.latlng).addTo(map)
+                    .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+                L.circle(e.latlng, { radius: radius }).addTo(map);
+
+                // Check if the user is within 50 meters of any hotspot
+                hotspots.forEach(function(hotspot) {
+                    var distance = getDistance(e.latlng.lat, e.latlng.lng, hotspot[0], hotspot[1]);
+                    if (distance <= 50) {
+                        playBeep();
+                        alert("Warning: You are within 50 meters of an accident hotspot!");
+                    }
+                });
+            });
+
+            map.on('locationerror', function() {
+                alert("Location access denied.");
+            });
         });
     </script>
 </body>
