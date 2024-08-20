@@ -12,11 +12,13 @@
 
 ## How It Works
 
+## Demo - https://youtu.be/sja4Um3P_Ew
+
 ### 1. Initialization
 The application starts by initializing a Leaflet map centered on a default location. The map uses OpenStreetMap tiles for rendering.
 
 ### 2. Displaying Hotspots
-Nine accident hotspots are pre-defined with their latitude and longitude coordinates. These hotspots are displayed on the map as red, semi-transparent circles with a radius of 50 meters. These circles visually indicate areas where accidents are more likely to occur.
+Nine accident hotspots in NY State are pre-defined with their latitude and longitude coordinates. These hotspots are displayed on the map as red, semi-transparent circles with a radius of 50 meters. These circles visually indicate areas where accidents are more likely to occur.
 
 ### 3. Search Functionality
 The map includes a search box that allows users to search for specific locations using the Nominatim API. When a user types a location into the search box, the map fetches possible matching locations and displays them in a dropdown list. Selecting a location from this list centers the map on that location and adds a marker.
@@ -56,7 +58,7 @@ To facilitate testing, the application includes a feature that simulates the use
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/yourusername/AcciGuard.git
+   git clone https://github.com/Ahmed123Hussain/AcciGuard.git
    cd AcciGuard
    ```
 
@@ -80,7 +82,7 @@ To facilitate testing, the application includes a feature that simulates the use
 
 ## Contributing
 
-Contributions are welcome! Please submit pull requests or report issues on the [GitHub repository](https://github.com/yourusername/AcciGuard).
+Contributions are welcome! Please submit pull requests or report issues on the [GitHub repository](https://github.com/Ahmed123Hussain/AcciGuard).
 
 ## License
 
