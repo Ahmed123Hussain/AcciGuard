@@ -2,6 +2,8 @@
 
 **AcciGuard** is an interactive map application designed to enhance road safety by alerting users when they are near accident hotspots. This web-based tool allows users to visualize known accident-prone areas on a map and receive real-time alerts if they come within a certain proximity to these hazardous locations.
 
+## DEMO - https://youtu.be/sja4Um3P_Ew
+
 ## Features
 
 - **Interactive Map:** Users can view accident hotspots marked with red transparent circles on an interactive map.
@@ -16,7 +18,7 @@
 The application starts by initializing a Leaflet map centered on a default location. The map uses OpenStreetMap tiles for rendering.
 
 ### 2. Displaying Hotspots
-Nine accident hotspots are pre-defined with their latitude and longitude coordinates. These hotspots are displayed on the map as red, semi-transparent circles with a radius of 50 meters. These circles visually indicate areas where accidents are more likely to occur.
+Nine accident hotspots in NY State are pre-defined with their latitude and longitude coordinates. These hotspots are displayed on the map as red, semi-transparent circles with a radius of 50 meters. These circles visually indicate areas where accidents are more likely to occur.
 
 ### 3. Search Functionality
 The map includes a search box that allows users to search for specific locations using the Nominatim API. When a user types a location into the search box, the map fetches possible matching locations and displays them in a dropdown list. Selecting a location from this list centers the map on that location and adds a marker.
