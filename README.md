@@ -2,8 +2,6 @@
 
 **AcciGuard** is an interactive map application designed to enhance road safety by alerting users when they are near accident hotspots. This web-based tool allows users to visualize known accident-prone areas on a map and receive real-time alerts if they come within a certain proximity to these hazardous locations.
 
-## DEMO - https://youtu.be/sja4Um3P_Ew
-
 ## Features
 
 - **Interactive Map:** Users can view accident hotspots marked with red transparent circles on an interactive map.
@@ -13,6 +11,8 @@
 - **Simulated Location for Testing:** The application includes a simulated location feature to test proximity alerts easily.
 
 ## How It Works
+
+## Demo - https://youtu.be/sja4Um3P_Ew
 
 ### 1. Initialization
 The application starts by initializing a Leaflet map centered on a default location. The map uses OpenStreetMap tiles for rendering.
