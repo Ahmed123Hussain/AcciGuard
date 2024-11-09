@@ -2,6 +2,8 @@
 
 **AcciGuard** is an interactive map application designed to enhance road safety by alerting users when they are near accident hotspots. This web-based tool allows users to visualize known accident-prone areas on a map and receive real-time alerts if they come within a certain proximity to these hazardous locations.
 
+AcciGuard is a safety-first app that alerts drivers when entering accident-prone areas in a city. Now enhanced with Gemini AI, it offers "Hazard Awareness Alerts" that inform drivers of potential hazards and provide actionable insights to reduce risks. This integration provides personalized hazard warnings, helping drivers and local authorities improve road safety at critical points.
+
 ## Demo
 ![](https://github.com/Ahmed123Hussain/AcciGuard/blob/main/Map-with-Hotspots-User-Location-and-Alerts.gif)
 
