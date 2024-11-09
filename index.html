@@ -251,6 +251,53 @@
                 alert("Location access denied.");
             });
         });
+        function reportHazard() {
+            map.locate({ setView: true, maxZoom: 16 });
+
+            map.on('locationfound', async function(e) {
+                const userLocation = e.latlng;
+
+                // Prompt user to describe the hazard
+                const hazardType = prompt("Describe the hazard (e.g., pothole, slippery road):");
+
+                if (hazardType) {
+                    // Call Gemini API to generate a hazard alert
+                    const alertMessage = await generateHazardAlert(hazardType);
+
+                    if (alertMessage) {
+                        alert(`Gemini AI Alert: ${alertMessage}`);
+                        L.marker(userLocation)
+                            .addTo(map)
+                            .bindPopup(`Reported Hazard: ${hazardType}<br>${alertMessage}`)
+                            .openPopup();
+                    }
+                }
+            });
+        }
+
+        // Function to interact with Gemini API to generate hazard alerts
+        async function generateHazardAlert(hazardType) {
+            const apiEndpoint = "https://api.example.com/gemini"; // Replace with actual Gemini API endpoint
+            const apiKey = "YOUR_GEMINI_API_KEY"; // Your Gemini API key
+
+            const response = await fetch(apiEndpoint, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({
+                    prompt: `Generate a safety alert for drivers near a ${hazardType}`,
+                    model: "Gemini-latest"
+                })
+            });
+
+            const data = await response.json();
+            return data.generated_text;
+        }
+
+        
+    
     </script>
 </body>
 </html>
